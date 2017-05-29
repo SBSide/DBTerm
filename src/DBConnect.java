@@ -12,7 +12,7 @@ public class DBConnect implements ActionListener{
                    login = new JFrame();
     private JPanel panel = new JPanel();
     private JLabel idLabel  = new JLabel("아이디"),
-                   pwdLabel = new JLabel("비밀번호");
+                   pwdLabel = new JLabel("사원번호");
     private JTextField idInput = new JTextField();
     private JPasswordField pwdInput = new JPasswordField();
     private JButton loginbutton = new JButton("로그인");
