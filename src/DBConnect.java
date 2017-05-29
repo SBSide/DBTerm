@@ -1,25 +1,52 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 
 /**
  * Created by iveci on 2017-05-29.
  */
-public class DBConnect {
+public class DBConnect implements ActionListener{
     private static Connection dbTest;
     private JFrame frame = new JFrame(),
                    login = new JFrame();
+    private JPanel panel = new JPanel();
+    private JLabel idLabel  = new JLabel("아이디"),
+                   pwdLabel = new JLabel("비밀번호");
+    private JTextField idInput = new JTextField();
+    private JPasswordField pwdInput = new JPasswordField();
+    private JButton loginbutton = new JButton("로그인");
+    private String user, passwd;
     DBConnect() {
         frame.setTitle("식당 관리 시스템");
         frame.setSize(500,500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        connectDB();
+        panel.setLayout(null);
+
+        //로그인창 설정 부분
+        idLabel.setBounds(20,10,60,30);
+        pwdLabel.setBounds(20,50,60,30);
+        idInput.setBounds(100,10,80,30);
+        pwdInput.setBounds(100,50,80,30);
+        loginbutton.setBounds(200,25,80,35);
+        loginbutton.addActionListener(this);
+        panel.add(idLabel);
+        panel.add(pwdLabel);
+        panel.add(idInput);
+        panel.add(pwdInput);
+        panel.add(loginbutton);
+        login.add(panel);
+        login.setTitle("사원 로그인");
+        login.setSize(320,130);
+        login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        login.setVisible(true);
     }
 
     private void connectDB() {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
-            dbTest = DriverManager.getConnection("jdbc:oracle:thin:" + "@localhost:1521:XE" , "dbuser","dbuser");
+            dbTest = DriverManager.getConnection("jdbc:oracle:thin:" + "@localhost:1521:XE" , user,passwd);
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Connection Failed.");
@@ -48,11 +75,27 @@ public class DBConnect {
     public static void main(String[] argv) {
         DBConnect db = new DBConnect();
         try {
-            db.execute_query();
-            dbTest.close();
+            while (dbTest!=null) {
+                db.execute_query();
+                dbTest.close();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("SQLException:" + e);
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == loginbutton){
+            user = idInput.getText();
+            passwd = new String(pwdInput.getPassword());
+            connectDB();
+            try {
+                if (!dbTest.isClosed()) login.setVisible(false);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 }
