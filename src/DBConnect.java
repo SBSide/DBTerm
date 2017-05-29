@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.sql.*;
 
 /**
@@ -5,7 +6,13 @@ import java.sql.*;
  */
 public class DBConnect {
     private static Connection dbTest;
+    private JFrame frame = new JFrame(),
+                   login = new JFrame();
     DBConnect() {
+        frame.setTitle("식당 관리 시스템");
+        frame.setSize(500,500);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
         connectDB();
     }
 
