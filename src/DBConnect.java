@@ -9,22 +9,27 @@ import java.sql.*;
  */
 public class DBConnect implements ActionListener{
     private static Connection dbTest;
+    //기본창과 모든 프레임
     private JFrame frame = new JFrame(),
                    login = new JFrame();
+
+    //메뉴
     private JMenuBar menuBar = new JMenuBar();
     private JMenu menu = new JMenu("Menu");
     private JMenuItem mopen  = new JMenuItem("Open"),
                       mlogin = new JMenuItem("Login");
     private JFileChooser opener = new JFileChooser();
+
+    //로그인
     private JPanel panel = new JPanel();
     private JLabel idLabel  = new JLabel("아이디"),
                    pwdLabel = new JLabel("사원번호");
     private JTextField idInput = new JTextField();
     private JPasswordField pwdInput = new JPasswordField();
     private JButton loginbutton = new JButton("로그인");
-    private String user, passwd;
+
     DBConnect() {
-        connectDB();
+        connectDB();//데이터베이스 연결
         //기본 창 설정 부분
         frame.setTitle("식당 관리 시스템");
         frame.setSize(500,500);
