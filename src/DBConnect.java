@@ -9,11 +9,22 @@ import java.sql.*;
  */
 public class DBConnect implements ActionListener{
     private static Connection dbTest;
-    //기본창과 모든 프레임
+    //창, Frame, Panel
     private JFrame frame = new JFrame(),
                    login = new JFrame();
+    private JPanel panel = new JPanel(),
+                   ptabl = new JPanel();
+
+    //테이블현황
+
+    //주문내역
 
     //메뉴
+
+    //등록조회
+
+
+    //메뉴바
     private JMenuBar menuBar = new JMenuBar();
     private JMenu menu = new JMenu("Menu");
     private JMenuItem mopen  = new JMenuItem("Open"),
@@ -21,7 +32,6 @@ public class DBConnect implements ActionListener{
     private JFileChooser opener = new JFileChooser();
 
     //로그인
-    private JPanel panel = new JPanel();
     private JLabel idLabel  = new JLabel("아이디"),
                    pwdLabel = new JLabel("사원번호");
     private JTextField idInput = new JTextField();
@@ -35,7 +45,18 @@ public class DBConnect implements ActionListener{
         frame.setSize(500,500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        panel.setLayout(null);
+
+        //테이블현황 설정 부분
+        ptabl.setLayout(new GridLayout(4,5));
+
+
+        //주문내역 설정 부분
+
+        //메뉴 설정 부분
+
+        //등록조회 설정 부분
+
+
         //기본 창 메뉴 설정 부분
         mopen.addActionListener(this);
         mlogin.addActionListener(this);
@@ -45,6 +66,7 @@ public class DBConnect implements ActionListener{
         frame.setJMenuBar(menuBar);
 
         //로그인창 설정 부분
+        panel.setLayout(null);
         idLabel.setBounds(20,10,60,30);
         pwdLabel.setBounds(20,50,60,30);
         idInput.setBounds(100,10,80,30);
@@ -95,10 +117,8 @@ public class DBConnect implements ActionListener{
     public static void main(String[] argv) {
         DBConnect db = new DBConnect();
         try {
-            while (dbTest!=null) {
                 db.execute_query();
                 dbTest.close();
-            }
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("SQLException:" + e);
