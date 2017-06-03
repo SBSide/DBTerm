@@ -11,7 +11,6 @@ public class DBConnect implements ActionListener{
     private static Connection dbTest;
     private JFrame frame = new JFrame(),
                    login = new JFrame();
-    private Container container = frame.getContentPane();
     private JMenuBar menuBar = new JMenuBar();
     private JMenu menu = new JMenu("Menu");
     private JMenuItem mopen  = new JMenuItem("Open"),
@@ -25,6 +24,7 @@ public class DBConnect implements ActionListener{
     private JButton loginbutton = new JButton("로그인");
     private String user, passwd;
     DBConnect() {
+        connectDB();
         //기본 창 설정 부분
         frame.setTitle("식당 관리 시스템");
         frame.setSize(500,500);
@@ -61,7 +61,7 @@ public class DBConnect implements ActionListener{
     private void connectDB() {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
-            dbTest = DriverManager.getConnection("jdbc:oracle:thin:" + "@localhost:1521:XE" , user,passwd);
+            dbTest = DriverManager.getConnection("jdbc:oracle:thin:" + "@localhost:1521:XE" , "dbuser","dbuser");
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Connection Failed.");
@@ -103,17 +103,11 @@ public class DBConnect implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginbutton){
-            user = idInput.getText();
-            passwd = new String(pwdInput.getPassword());
-            connectDB();
-            try {
-                if (!dbTest.isClosed()) login.setVisible(false);
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
+            //사원으로 로그인임 dbuser아님
         }
         else if (e.getSource() == mopen){
             if(opener.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+                //읽어온 뒤 쿼리화
             }
         }
         else if (e.getSource() == mlogin){
