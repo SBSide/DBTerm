@@ -18,14 +18,10 @@ public class DBConnect implements ActionListener{
                    login  = new JFrame();
     private JPanel plogin = new JPanel(),
                    pmain  = new JPanel(),
-                   ptabl  = new JPanel(),
+                   ptabl  = new Table(),
                    porder = new JPanel(),
                    pmenu  = new JPanel(),
                    pview  = new JPanel();
-
-    //테이블현황
-    JLabel laaa = new JLabel(1+"");
-
 
     //주문내역
 
@@ -55,16 +51,6 @@ public class DBConnect implements ActionListener{
         frame.setSize(750,1000);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-
-        //테이블현황 설정 부분
-        ptabl.setLayout(new GridLayout(4,5));
-        for(int i=1; i <= 20; i++) {
-            JLabel j = new JLabel(i+"");
-            j.setBorder(new LineBorder(Color.BLACK,3));
-            ptabl.add(j);
-        }
-        ptabl.setBorder(new TitledBorder("테이블 현황"));
-
 
         //주문내역 설정 부분
         porder.setLayout(null);
