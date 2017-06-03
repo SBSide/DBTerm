@@ -1,4 +1,8 @@
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,12 +14,18 @@ import java.sql.*;
 public class DBConnect implements ActionListener{
     private static Connection dbTest;
     //창, Frame, Panel
-    private JFrame frame = new JFrame(),
-                   login = new JFrame();
-    private JPanel panel = new JPanel(),
-                   ptabl = new JPanel();
+    private JFrame frame  = new JFrame(),
+                   login  = new JFrame();
+    private JPanel plogin = new JPanel(),
+                   pmain  = new JPanel(),
+                   ptabl  = new JPanel(),
+                   porder = new JPanel(),
+                   pmenu  = new JPanel(),
+                   pview  = new JPanel();
 
     //테이블현황
+    JLabel laaa = new JLabel(1+"");
+
 
     //주문내역
 
@@ -42,43 +52,61 @@ public class DBConnect implements ActionListener{
         connectDB();//데이터베이스 연결
         //기본 창 설정 부분
         frame.setTitle("식당 관리 시스템");
-        frame.setSize(500,500);
+        frame.setSize(750,1000);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
         //테이블현황 설정 부분
         ptabl.setLayout(new GridLayout(4,5));
+        for(int i=1; i <= 20; i++) {
+            JLabel j = new JLabel(i+"");
+            j.setBorder(new LineBorder(Color.BLACK,3));
+            ptabl.add(j);
+        }
+        ptabl.setBorder(new TitledBorder("테이블 현황"));
 
 
         //주문내역 설정 부분
+        porder.setLayout(null);
+        porder.setBorder(new TitledBorder("주문내역"));
 
         //메뉴 설정 부분
+        pmenu.setLayout(new GridLayout(10,2));
+        pmenu.setBorder(new TitledBorder("메뉴"));
 
         //등록조회 설정 부분
+        pview.setLayout(null);
+        pview.setBorder(new TitledBorder("등록/조회"));
 
 
         //기본 창 메뉴 설정 부분
+        pmain.setLayout(new GridLayout(2,2));
+        pmain.add(ptabl);
+        pmain.add(porder);
+        pmain.add(pmenu);
+        pmain.add(pview);
         mopen.addActionListener(this);
         mlogin.addActionListener(this);
         menu.add(mopen);
         menu.add(mlogin);
         menuBar.add(menu);
+        frame.add(pmain);
         frame.setJMenuBar(menuBar);
 
         //로그인창 설정 부분
-        panel.setLayout(null);
+        plogin.setLayout(null);
         idLabel.setBounds(20,10,60,30);
         pwdLabel.setBounds(20,50,60,30);
         idInput.setBounds(100,10,80,30);
         pwdInput.setBounds(100,50,80,30);
         loginbutton.setBounds(200,25,80,35);
         loginbutton.addActionListener(this);
-        panel.add(idLabel);
-        panel.add(pwdLabel);
-        panel.add(idInput);
-        panel.add(pwdInput);
-        panel.add(loginbutton);
-        login.add(panel);
+        plogin.add(idLabel);
+        plogin.add(pwdLabel);
+        plogin.add(idInput);
+        plogin.add(pwdInput);
+        plogin.add(loginbutton);
+        login.add(plogin);
         login.setTitle("사원 로그인");
         login.setSize(320,130);
         login.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
