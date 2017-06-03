@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
@@ -10,6 +11,12 @@ public class DBConnect implements ActionListener{
     private static Connection dbTest;
     private JFrame frame = new JFrame(),
                    login = new JFrame();
+    private Container container = frame.getContentPane();
+    private JMenuBar menuBar = new JMenuBar();
+    private JMenu menu = new JMenu("Menu");
+    private JMenuItem mopen  = new JMenuItem("Open"),
+                      mlogin = new JMenuItem("Login");
+    private JFileChooser opener = new JFileChooser();
     private JPanel panel = new JPanel();
     private JLabel idLabel  = new JLabel("아이디"),
                    pwdLabel = new JLabel("사원번호");
@@ -18,11 +25,19 @@ public class DBConnect implements ActionListener{
     private JButton loginbutton = new JButton("로그인");
     private String user, passwd;
     DBConnect() {
+        //기본 창 설정 부분
         frame.setTitle("식당 관리 시스템");
         frame.setSize(500,500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         panel.setLayout(null);
+        //기본 창 메뉴 설정 부분
+        mopen.addActionListener(this);
+        mlogin.addActionListener(this);
+        menu.add(mopen);
+        menu.add(mlogin);
+        menuBar.add(menu);
+        frame.setJMenuBar(menuBar);
 
         //로그인창 설정 부분
         idLabel.setBounds(20,10,60,30);
@@ -39,8 +54,8 @@ public class DBConnect implements ActionListener{
         login.add(panel);
         login.setTitle("사원 로그인");
         login.setSize(320,130);
-        login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        login.setVisible(true);
+        login.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+//        login.setVisible(true);
     }
 
     private void connectDB() {
@@ -96,6 +111,13 @@ public class DBConnect implements ActionListener{
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
+        }
+        else if (e.getSource() == mopen){
+            if(opener.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+            }
+        }
+        else if (e.getSource() == mlogin){
+            login.setVisible(true);
         }
     }
 }
